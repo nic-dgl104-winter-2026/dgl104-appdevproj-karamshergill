@@ -29,6 +29,12 @@ loginForm.addEventListener("submit", function (e) {
   alert("Logged in as " + userNameValue + " (" + roleValue + ")");
 });
 
+function resetTaskForm() {
+  taskForm.reset();
+  taskLevel.value = "Medium";
+  taskState.value = "To Do";
+}
+
 function drawTasks() {
   listArea.innerHTML = "";
 
@@ -50,16 +56,27 @@ function drawTasks() {
 taskForm.addEventListener("submit", function (e) {
   e.preventDefault();
 
+  const nameValue = taskName.value.trim();
+  const detailsValue = taskInfo.value.trim();
+  const dateValue = taskDate.value;
+  const assignedValue = assignedUser.value.trim();
+
+  if (nameValue === "" || detailsValue === "" || dateValue === "" || assignedValue === "") {
+    alert("Please fill all task fields.");
+    return;
+  }
+
   const newTask = {
     id: new Date().getTime(),
-    name: taskName.value.trim(),
-    details: taskInfo.value.trim(),
+    name: nameValue,
+    details: detailsValue,
     priority: taskLevel.value,
     status: taskState.value,
-    date: taskDate.value,
-    assigned: assignedUser.value.trim()
+    date: dateValue,
+    assigned: assignedValue
   };
 
   taskData.push(newTask);
   drawTasks();
+  resetTaskForm();
 });
