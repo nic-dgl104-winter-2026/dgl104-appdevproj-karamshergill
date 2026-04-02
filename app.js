@@ -38,6 +38,12 @@ function sendNotice(message) {
   noticeBox.textContent = message;
 }
 
+function logMessage(message) {
+  console.log(message);
+}
+
+
+
 function keepData() {
   localStorage.setItem("studentTaskData", JSON.stringify(AppState.taskData));
 }
@@ -84,6 +90,7 @@ loginForm.addEventListener("submit", function (e) {
 
   sendNotice("User logged in: " + currentUser.name + " (" + currentUser.role + ")");
 });
+logMessage("Login success for " + currentUser.name);
 
 function resetTaskForm() {
   taskForm.reset();
@@ -102,6 +109,7 @@ function removeTask(id) {
   drawTasks();
   showCounts();
   sendNotice("Task deleted successfully.");
+  logMessage("Task deleted with id " + id);
 }
 
 function loadForEdit(id) {
@@ -122,6 +130,7 @@ function loadForEdit(id) {
   AppState.changingId = id;
   saveBtn.textContent = "Update Task";
   sendNotice("Task loaded for editing.");
+  logMessage("Editing task with id " + id);
 }
 
 function drawTasks() {
@@ -179,6 +188,7 @@ taskForm.addEventListener("submit", function (e) {
     }
 
     sendNotice("Task updated successfully.");
+    logMessage("Task updated successfully");
   } else {
     const newTask = {
       id: new Date().getTime(),
@@ -192,6 +202,7 @@ taskForm.addEventListener("submit", function (e) {
 
     AppState.taskData.push(newTask);
     sendNotice("New task created successfully.");
+    logMessage("Task created successfully");
   }
 
   keepData();
