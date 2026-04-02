@@ -10,5 +10,29 @@ h1 {
 }
 
 p {
-  color: #555;
+  color: #555555;
+}
+
+section {
+  background: white;
+  padding: 15px;
+  border: 1px solid #dddddd;
+  margin-top: 20px;
+}
+
+input,
+select,
+button {
+  display: block;
+  width: 100%;
+  padding: 10px;
+  margin-top: 8px;
+  margin-bottom: 12px;
+}
+
+button {
+  background: #183153;
+  color: white;
+  border: none;
+  cursor: pointer;
 }
