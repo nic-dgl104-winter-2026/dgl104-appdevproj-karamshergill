@@ -21,6 +21,7 @@ section {
 }
 
 input,
+textarea,
 select,
 button {
   display: block;
@@ -35,4 +36,15 @@ button {
   color: white;
   border: none;
   cursor: pointer;
+}
+
+#list-area {
+  margin-top: 20px;
+}
+
+.one-task {
+  background: #fafafa;
+  border: 1px solid #dddddd;
+  padding: 12px;
+  margin-bottom: 10px;
 }

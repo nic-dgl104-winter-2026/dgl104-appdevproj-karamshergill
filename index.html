@@ -28,6 +28,44 @@
     </form>
   </section>
 
+  <section id="task-section">
+    <h2>Add Task</h2>
+    <form id="task-form">
+      <label for="task-name">Task Name</label>
+      <input type="text" id="task-name">
+
+      <label for="task-info">Description</label>
+      <textarea id="task-info"></textarea>
+
+      <label for="task-level">Priority</label>
+      <select id="task-level">
+        <option value="Low">Low</option>
+        <option value="Medium">Medium</option>
+        <option value="High">High</option>
+      </select>
+
+      <label for="task-state">Status</label>
+      <select id="task-state">
+        <option value="To Do">To Do</option>
+        <option value="Working">Working</option>
+        <option value="Done">Done</option>
+      </select>
+
+      <label for="task-date">Due Date</label>
+      <input type="date" id="task-date">
+
+      <label for="assigned-user">Assign To</label>
+      <input type="text" id="assigned-user">
+
+      <button type="submit" id="save-btn">Save Task</button>
+    </form>
+  </section>
+
+  <section>
+    <h2>Your Task list</h2>
+    <div id="list-area"></div>
+  </section>
+
   <script src="app.js"></script>
 </body>
 </html>
