@@ -17,6 +17,13 @@ const listArea = document.getElementById("list-area");
 let taskData = JSON.parse(localStorage.getItem("studentTaskData")) || [];
 let changingId = null;
 
+function createUser(userName, userRole) {
+  return {
+    name: userName,
+    role: userRole
+  };
+}
+
 loginForm.addEventListener("submit", function (e) {
   e.preventDefault();
 
@@ -28,10 +35,12 @@ loginForm.addEventListener("submit", function (e) {
     return;
   }
 
-  localStorage.setItem("currentUserName", userNameValue);
-  localStorage.setItem("currentUserRole", roleValue);
+  const currentUser = createUser(userNameValue, roleValue);
 
-  alert("Logged in as " + userNameValue + " (" + roleValue + ")");
+  localStorage.setItem("currentUserName", currentUser.name);
+  localStorage.setItem("currentUserRole", currentUser.role);
+
+  alert("Logged in as " + currentUser.name + " (" + currentUser.role + ")");
 });
 
 function keepData() {
