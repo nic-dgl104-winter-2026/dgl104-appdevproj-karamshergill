@@ -1,5 +1,7 @@
 "use strict";
 
+const noticeBox = document.getElementById("notice-box");
+
 const loginForm = document.getElementById("login-form");
 const username = document.getElementById("username");
 const role = document.getElementById("role");
@@ -24,6 +26,10 @@ function createUser(userName, userRole) {
   };
 }
 
+function sendNotice(message) {
+  noticeBox.textContent = message;
+}
+
 loginForm.addEventListener("submit", function (e) {
   e.preventDefault();
 
@@ -40,7 +46,7 @@ loginForm.addEventListener("submit", function (e) {
   localStorage.setItem("currentUserName", currentUser.name);
   localStorage.setItem("currentUserRole", currentUser.role);
 
-  alert("Logged in as " + currentUser.name + " (" + currentUser.role + ")");
+  sendNotice("User logged in: " + currentUser.name + " (" + currentUser.role + ")");
 });
 
 function keepData() {
@@ -62,6 +68,7 @@ function removeTask(id) {
 
   keepData();
   drawTasks();
+  sendNotice("Task deleted successfully.");
 }
 
 function loadForEdit(id) {
@@ -81,6 +88,7 @@ function loadForEdit(id) {
   assignedUser.value = found.assigned;
   changingId = id;
   saveBtn.textContent = "Update Task";
+  sendNotice("Task loaded for editing.");
 }
 
 function drawTasks() {
@@ -130,6 +138,8 @@ taskForm.addEventListener("submit", function (e) {
         };
       }
     }
+
+    sendNotice("Task updated successfully.");
   } else {
     const newTask = {
       id: new Date().getTime(),
@@ -142,6 +152,7 @@ taskForm.addEventListener("submit", function (e) {
     };
 
     taskData.push(newTask);
+    sendNotice("New task created successfully.");
   }
 
   keepData();

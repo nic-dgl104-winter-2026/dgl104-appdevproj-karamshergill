@@ -48,3 +48,10 @@ button {
   padding: 12px;
   margin-bottom: 10px;
 }
+
+#notice-box {
+  background: #e8f4ff;
+  border: 1px solid #b9d8f3;
+  padding: 10px;
+  margin-bottom: 15px;
+}
