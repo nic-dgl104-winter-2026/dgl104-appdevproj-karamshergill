@@ -14,7 +14,7 @@ const assignedUser = document.getElementById("assigned-user");
 const saveBtn = document.getElementById("save-btn");
 const listArea = document.getElementById("list-area");
 
-let taskData = [];
+let taskData = JSON.parse(localStorage.getItem("studentTaskData")) || [];
 let changingId = null;
 
 loginForm.addEventListener("submit", function (e) {
@@ -28,8 +28,15 @@ loginForm.addEventListener("submit", function (e) {
     return;
   }
 
+  localStorage.setItem("currentUserName", userNameValue);
+  localStorage.setItem("currentUserRole", roleValue);
+
   alert("Logged in as " + userNameValue + " (" + roleValue + ")");
 });
+
+function keepData() {
+  localStorage.setItem("studentTaskData", JSON.stringify(taskData));
+}
 
 function resetTaskForm() {
   taskForm.reset();
@@ -44,6 +51,7 @@ function removeTask(id) {
     return item.id !== id;
   });
 
+  keepData();
   drawTasks();
 }
 
@@ -127,6 +135,7 @@ taskForm.addEventListener("submit", function (e) {
     taskData.push(newTask);
   }
 
+  keepData();
   drawTasks();
   resetTaskForm();
 });
@@ -143,3 +152,5 @@ listArea.addEventListener("click", function (e) {
     loadForEdit(Number(editId));
   }
 });
+
+drawTasks();
