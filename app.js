@@ -1,6 +1,10 @@
 "use strict";
 
 const noticeBox = document.getElementById("notice-box");
+const allCount = document.getElementById("all-count");
+const todoCount = document.getElementById("todo-count");
+const workCount = document.getElementById("work-count");
+const doneCount = document.getElementById("done-count");
 
 const loginForm = document.getElementById("login-form");
 const username = document.getElementById("username");
@@ -16,8 +20,10 @@ const assignedUser = document.getElementById("assigned-user");
 const saveBtn = document.getElementById("save-btn");
 const listArea = document.getElementById("list-area");
 
-let taskData = JSON.parse(localStorage.getItem("studentTaskData")) || [];
-let changingId = null;
+const AppState = {
+  taskData: JSON.parse(localStorage.getItem("studentTaskData")) || [],
+  changingId: null
+};
 
 function createUser(userName, userRole) {
   return {
@@ -28,6 +34,23 @@ function createUser(userName, userRole) {
 
 function sendNotice(message) {
   noticeBox.textContent = message;
+}
+
+function keepData() {
+  localStorage.setItem("studentTaskData", JSON.stringify(AppState.taskData));
+}
+
+function showCounts() {
+  allCount.textContent = AppState.taskData.length;
+  todoCount.textContent = AppState.taskData.filter(function (item) {
+    return item.status === "To Do";
+  }).length;
+  workCount.textContent = AppState.taskData.filter(function (item) {
+    return item.status === "Working";
+  }).length;
+  doneCount.textContent = AppState.taskData.filter(function (item) {
+    return item.status === "Done";
+  }).length;
 }
 
 loginForm.addEventListener("submit", function (e) {
@@ -49,30 +72,27 @@ loginForm.addEventListener("submit", function (e) {
   sendNotice("User logged in: " + currentUser.name + " (" + currentUser.role + ")");
 });
 
-function keepData() {
-  localStorage.setItem("studentTaskData", JSON.stringify(taskData));
-}
-
 function resetTaskForm() {
   taskForm.reset();
   taskLevel.value = "Medium";
   taskState.value = "To Do";
   saveBtn.textContent = "Save Task";
-  changingId = null;
+  AppState.changingId = null;
 }
 
 function removeTask(id) {
-  taskData = taskData.filter(function (item) {
+  AppState.taskData = AppState.taskData.filter(function (item) {
     return item.id !== id;
   });
 
   keepData();
   drawTasks();
+  showCounts();
   sendNotice("Task deleted successfully.");
 }
 
 function loadForEdit(id) {
-  const found = taskData.find(function (item) {
+  const found = AppState.taskData.find(function (item) {
     return item.id === id;
   });
 
@@ -86,7 +106,7 @@ function loadForEdit(id) {
   taskState.value = found.status;
   taskDate.value = found.date;
   assignedUser.value = found.assigned;
-  changingId = id;
+  AppState.changingId = id;
   saveBtn.textContent = "Update Task";
   sendNotice("Task loaded for editing.");
 }
@@ -94,7 +114,7 @@ function loadForEdit(id) {
 function drawTasks() {
   listArea.innerHTML = "";
 
-  taskData.forEach(function (item) {
+  AppState.taskData.forEach(function (item) {
     const block = document.createElement("div");
     block.className = "one-task";
     block.innerHTML =
@@ -124,11 +144,11 @@ taskForm.addEventListener("submit", function (e) {
     return;
   }
 
-  if (changingId !== null) {
-    for (let i = 0; i < taskData.length; i++) {
-      if (taskData[i].id === changingId) {
-        taskData[i] = {
-          id: changingId,
+  if (AppState.changingId !== null) {
+    for (let i = 0; i < AppState.taskData.length; i++) {
+      if (AppState.taskData[i].id === AppState.changingId) {
+        AppState.taskData[i] = {
+          id: AppState.changingId,
           name: nameValue,
           details: detailsValue,
           priority: taskLevel.value,
@@ -151,12 +171,13 @@ taskForm.addEventListener("submit", function (e) {
       assigned: assignedValue
     };
 
-    taskData.push(newTask);
+    AppState.taskData.push(newTask);
     sendNotice("New task created successfully.");
   }
 
   keepData();
   drawTasks();
+  showCounts();
   resetTaskForm();
 });
 
@@ -174,3 +195,4 @@ listArea.addEventListener("click", function (e) {
 });
 
 drawTasks();
+showCounts();
