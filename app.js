@@ -35,6 +35,14 @@ function resetTaskForm() {
   taskState.value = "To Do";
 }
 
+function removeTask(id) {
+  taskData = taskData.filter(function (item) {
+    return item.id !== id;
+  });
+
+  drawTasks();
+}
+
 function drawTasks() {
   listArea.innerHTML = "";
 
@@ -47,7 +55,8 @@ function drawTasks() {
       "<p><strong>Priority:</strong> " + item.priority + "</p>" +
       "<p><strong>Status:</strong> " + item.status + "</p>" +
       "<p><strong>Due Date:</strong> " + item.date + "</p>" +
-      "<p><strong>Assigned To:</strong> " + item.assigned + "</p>";
+      "<p><strong>Assigned To:</strong> " + item.assigned + "</p>" +
+      '<button data-remove="' + item.id + '">Delete</button>';
 
     listArea.appendChild(block);
   });
@@ -79,4 +88,12 @@ taskForm.addEventListener("submit", function (e) {
   taskData.push(newTask);
   drawTasks();
   resetTaskForm();
+});
+
+listArea.addEventListener("click", function (e) {
+  const removeId = e.target.getAttribute("data-remove");
+
+  if (removeId) {
+    removeTask(Number(removeId));
+  }
 });
