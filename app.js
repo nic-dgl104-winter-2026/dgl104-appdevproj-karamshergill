@@ -5,6 +5,8 @@ const allCount = document.getElementById("all-count");
 const todoCount = document.getElementById("todo-count");
 const workCount = document.getElementById("work-count");
 const doneCount = document.getElementById("done-count");
+const statusFilter = document.getElementById("status-filter");
+const priorityFilter = document.getElementById("priority-filter");
 
 const loginForm = document.getElementById("login-form");
 const username = document.getElementById("username");
@@ -51,6 +53,17 @@ function showCounts() {
   doneCount.textContent = AppState.taskData.filter(function (item) {
     return item.status === "Done";
   }).length;
+}
+
+function getFilteredTasks() {
+  const selectedStatus = statusFilter.value;
+  const selectedPriority = priorityFilter.value;
+
+  return AppState.taskData.filter(function (item) {
+    const sameStatus = selectedStatus === "All" || item.status === selectedStatus;
+    const samePriority = selectedPriority === "All" || item.priority === selectedPriority;
+    return sameStatus && samePriority;
+  });
 }
 
 loginForm.addEventListener("submit", function (e) {
@@ -112,9 +125,15 @@ function loadForEdit(id) {
 }
 
 function drawTasks() {
+  const finalTasks = getFilteredTasks();
   listArea.innerHTML = "";
 
-  AppState.taskData.forEach(function (item) {
+  if (finalTasks.length === 0) {
+    listArea.innerHTML = "<p>No task available right now.</p>";
+    return;
+  }
+
+  finalTasks.forEach(function (item) {
     const block = document.createElement("div");
     block.className = "one-task";
     block.innerHTML =
@@ -193,6 +212,9 @@ listArea.addEventListener("click", function (e) {
     loadForEdit(Number(editId));
   }
 });
+
+statusFilter.addEventListener("change", drawTasks);
+priorityFilter.addEventListener("change", drawTasks);
 
 drawTasks();
 showCounts();
