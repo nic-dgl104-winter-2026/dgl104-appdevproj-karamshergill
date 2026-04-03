@@ -7,35 +7,35 @@
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <div id="notice-box"></div>
+  <div id="notice-box">Welcome! Please login first.</div>
 
   <section>
-  <h2>Summary</h2>
-  <p>All Tasks: <span id="all-count">0</span></p>
-  <p>To Do: <span id="todo-count">0</span></p>
-  <p>Working: <span id="work-count">0</span></p>
-  <p>Done: <span id="done-count">0</span></p>
+    <h2>Summary</h2>
+    <p>All Tasks: <span id="all-count">0</span></p>
+    <p>To Do: <span id="todo-count">0</span></p>
+    <p>Working: <span id="work-count">0</span></p>
+    <p>Done: <span id="done-count">0</span></p>
   </section>
 
   <section>
-  <h2>Filters</h2>
+    <h2>Filters</h2>
 
-  <label for="status-filter">Filter by Status</label>
-  <select id="status-filter">
-    <option value="All">All Status</option>
-    <option value="To Do">To Do</option>
-    <option value="Working">Working</option>
-    <option value="Done">Done</option>
-  </select>
+    <label for="status-filter">Filter by Status</label>
+    <select id="status-filter">
+      <option value="All">All Status</option>
+      <option value="To Do">To Do</option>
+      <option value="Working">Working</option>
+      <option value="Done">Done</option>
+    </select>
 
-  <label for="priority-filter">Filter by Priority</label>
-  <select id="priority-filter">
-    <option value="All">All Priority</option>
-    <option value="High">High</option>
-    <option value="Medium">Medium</option>
-    <option value="Low">Low</option>
-  </select>
-</section>
+    <label for="priority-filter">Filter by Priority</label>
+    <select id="priority-filter">
+      <option value="All">All Priority</option>
+      <option value="High">High</option>
+      <option value="Medium">Medium</option>
+      <option value="Low">Low</option>
+    </select>
+  </section>
 
   <h1>Task Management System</h1>
   <p>Simple task manager project</p>
@@ -45,6 +45,7 @@
     <form id="login-form">
       <label for="username">Username</label>
       <input type="text" id="username">
+
       <label for="role">Role</label>
       <select id="role">
         <option value="Admin">Admin</option>
@@ -69,13 +70,13 @@
       <label for="task-level">Priority</label>
       <select id="task-level">
         <option value="Low">Low</option>
-        <option value="Medium">Medium</option>
+        <option value="Medium" selected>Medium</option>
         <option value="High">High</option>
       </select>
 
       <label for="task-state">Status</label>
       <select id="task-state">
-        <option value="To Do">To Do</option>
+        <option value="To Do" selected>To Do</option>
         <option value="Working">Working</option>
         <option value="Done">Done</option>
       </select>
@@ -91,7 +92,7 @@
   </section>
 
   <section>
-    <h2>Your Task list</h2>
+    <h2>Your Task List</h2>
     <div id="list-area"></div>
   </section>
 
