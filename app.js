@@ -42,20 +42,21 @@ function logMessage(message) {
   console.log(message);
 }
 
-
-
 function keepData() {
   localStorage.setItem("studentTaskData", JSON.stringify(AppState.taskData));
 }
 
 function showCounts() {
   allCount.textContent = AppState.taskData.length;
+
   todoCount.textContent = AppState.taskData.filter(function (item) {
     return item.status === "To Do";
   }).length;
+
   workCount.textContent = AppState.taskData.filter(function (item) {
     return item.status === "Working";
   }).length;
+
   doneCount.textContent = AppState.taskData.filter(function (item) {
     return item.status === "Done";
   }).length;
@@ -66,8 +67,12 @@ function getFilteredTasks() {
   const selectedPriority = priorityFilter.value;
 
   return AppState.taskData.filter(function (item) {
-    const sameStatus = selectedStatus === "All" || item.status === selectedStatus;
-    const samePriority = selectedPriority === "All" || item.priority === selectedPriority;
+    const sameStatus =
+      selectedStatus === "All" || item.status === selectedStatus;
+
+    const samePriority =
+      selectedPriority === "All" || item.priority === selectedPriority;
+
     return sameStatus && samePriority;
   });
 }
@@ -89,8 +94,10 @@ loginForm.addEventListener("submit", function (e) {
   localStorage.setItem("currentUserRole", currentUser.role);
 
   sendNotice("User logged in: " + currentUser.name + " (" + currentUser.role + ")");
+  logMessage("Login success for " + currentUser.name);
+
+  loginForm.reset();
 });
-logMessage("Login success for " + currentUser.name);
 
 function resetTaskForm() {
   taskForm.reset();
@@ -127,8 +134,10 @@ function loadForEdit(id) {
   taskState.value = found.status;
   taskDate.value = found.date;
   assignedUser.value = found.assigned;
+
   AppState.changingId = id;
   saveBtn.textContent = "Update Task";
+
   sendNotice("Task loaded for editing.");
   logMessage("Editing task with id " + id);
 }
@@ -145,6 +154,7 @@ function drawTasks() {
   finalTasks.forEach(function (item) {
     const block = document.createElement("div");
     block.className = "one-task";
+
     block.innerHTML =
       "<h3>" + item.name + "</h3>" +
       "<p><strong>Description:</strong> " + item.details + "</p>" +
@@ -152,8 +162,8 @@ function drawTasks() {
       "<p><strong>Status:</strong> " + item.status + "</p>" +
       "<p><strong>Due Date:</strong> " + item.date + "</p>" +
       "<p><strong>Assigned To:</strong> " + item.assigned + "</p>" +
-      '<button data-edit="' + item.id + '">Edit</button> ' +
-      '<button data-remove="' + item.id + '">Delete</button>';
+      '<button type="button" data-edit="' + item.id + '">Edit</button>' +
+      '<button type="button" data-remove="' + item.id + '">Delete</button>';
 
     listArea.appendChild(block);
   });
@@ -167,7 +177,12 @@ taskForm.addEventListener("submit", function (e) {
   const dateValue = taskDate.value;
   const assignedValue = assignedUser.value.trim();
 
-  if (nameValue === "" || detailsValue === "" || dateValue === "" || assignedValue === "") {
+  if (
+    nameValue === "" ||
+    detailsValue === "" ||
+    dateValue === "" ||
+    assignedValue === ""
+  ) {
     alert("Please fill all task fields.");
     return;
   }
@@ -201,6 +216,7 @@ taskForm.addEventListener("submit", function (e) {
     };
 
     AppState.taskData.push(newTask);
+
     sendNotice("New task created successfully.");
     logMessage("Task created successfully");
   }
